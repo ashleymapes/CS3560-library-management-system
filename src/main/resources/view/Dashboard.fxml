@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.cpp.library.controller.DashboardController"
+      spacing="20" styleClass="dashboard">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Header -->
+    <HBox alignment="CENTER" styleClass="header">
+        <Text text="CPP Library Management System" styleClass="title-text"/>
+    </HBox>
+    
+    <!-- Main Content -->
+    <VBox spacing="50" alignment="CENTER" VBox.vgrow="ALWAYS"> <!-- Increased spacing -->
+        
+        <!-- Welcome Message -->
+        <VBox alignment="CENTER" spacing="15"> <!-- Slightly more spacing -->
+            <Text text="Welcome to the Library Management System" styleClass="welcome-text"/>
+            <Text text="Select an option below to manage library operations" styleClass="subtitle-text"/>
+        </VBox>
+        
+        <!-- Navigation Grid -->
+        <GridPane hgap="50" vgap="50" alignment="CENTER"> <!-- Increased hgap/vgap -->
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="200" prefWidth="250"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="200" prefWidth="250"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" minHeight="150" prefHeight="180"/>
+                <RowConstraints vgrow="SOMETIMES" minHeight="150" prefHeight="180"/>
+            </rowConstraints>
+            
+            <!-- Student Management -->
+            <VBox styleClass="nav-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <VBox alignment="CENTER" spacing="15" VBox.vgrow="ALWAYS">
+                    <Text text="👥" styleClass="icon-text"/>
+                    <Text text="Student Management" styleClass="card-title"/>
+                    <Text text="Register and manage student information" styleClass="card-description"/>
+                    <Button text="Manage Students" styleClass="nav-button" 
+                            onAction="#openStudentManagement"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Book Management -->
+            <VBox styleClass="nav-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <VBox alignment="CENTER" spacing="15" VBox.vgrow="ALWAYS">
+                    <Text text="📚" styleClass="icon-text"/>
+                    <Text text="Book Management" styleClass="card-title"/>
+                    <Text text="Add and manage books and copies" styleClass="card-description"/>
+                    <Button text="Manage Books" styleClass="nav-button" 
+                            onAction="#openBookManagement"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Loan Management -->
+            <VBox styleClass="nav-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <VBox alignment="CENTER" spacing="15" VBox.vgrow="ALWAYS">
+                    <Text text="📖" styleClass="icon-text"/>
+                    <Text text="Loan Management" styleClass="card-title"/>
+                    <Text text="Process loans and returns" styleClass="card-description"/>
+                    <Button text="Manage Loans" styleClass="nav-button" 
+                            onAction="#openLoanManagement"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Reports -->
+            <VBox styleClass="nav-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <VBox alignment="CENTER" spacing="15" VBox.vgrow="ALWAYS">
+                    <Text text="📊" styleClass="icon-text"/>
+                    <Text text="Reports" styleClass="card-title"/>
+                    <Text text="Generate loan reports and analytics" styleClass="card-description"/>
+                    <Button text="View Reports" styleClass="nav-button" 
+                            onAction="#openReports"/>
+                </VBox>
+            </VBox>
+        </GridPane>
+        
+        <!-- Quick Stats -->
+        <VBox spacing="30" alignment="CENTER"> <!-- More space above stats -->
+            <Text text="Quick Statistics" styleClass="section-title"/>
+            <HBox spacing="60" alignment="CENTER"> <!-- More space between stat cards -->
+                <VBox alignment="CENTER" styleClass="stat-card">
+                    <Text fx:id="totalStudentsText" text="Students: 0" styleClass="stat-text"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="stat-card">
+                    <Text fx:id="totalBooksText" text="Books: 0" styleClass="stat-text"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="stat-card">
+                    <Text fx:id="activeLoansText" text="Active Loans: 0" styleClass="stat-text"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="stat-card">
+                    <Text fx:id="overdueLoansText" text="Overdue: 0" styleClass="stat-text"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+    
+    <!-- Footer -->
+    <HBox alignment="CENTER" styleClass="footer">
+        <Text text="Ashley's Library Management System" styleClass="footer-text"/>
+    </HBox>
+    
+</VBox> 

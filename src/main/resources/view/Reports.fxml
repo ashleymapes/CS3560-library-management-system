@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.cpp.library.controller.ReportsController"
+      spacing="20" styleClass="management-screen">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" styleClass="header">
+        <Text text="Reports &amp; Analytics" styleClass="title-text"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Refresh All" onAction="#refreshAllReports" styleClass="button-secondary"/>
+    </HBox>
+    
+    <!-- Statistics Overview -->
+    <VBox spacing="10" styleClass="report-section">
+        <Text text="Library Statistics" styleClass="section-title"/>
+        <GridPane hgap="20" vgap="10" styleClass="stats-grid">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="150" prefWidth="200"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="150" prefWidth="200"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="150" prefWidth="200"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="150" prefWidth="200"/>
+            </columnConstraints>
+            
+            <VBox styleClass="stat-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="Total Students" styleClass="stat-label"/>
+                <Label fx:id="totalStudentsLabel" text="0" styleClass="stat-value"/>
+            </VBox>
+            
+            <VBox styleClass="stat-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="Total Books" styleClass="stat-label"/>
+                <Label fx:id="totalBooksLabel" text="0" styleClass="stat-value"/>
+            </VBox>
+            
+            <VBox styleClass="stat-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <Label text="Total Copies" styleClass="stat-label"/>
+                <Label fx:id="totalCopiesLabel" text="0" styleClass="stat-value"/>
+            </VBox>
+            
+            <VBox styleClass="stat-card" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                <Label text="Active Loans" styleClass="stat-label"/>
+                <Label fx:id="activeLoansLabel" text="0" styleClass="stat-value"/>
+            </VBox>
+            
+            <VBox styleClass="stat-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="Overdue Loans" styleClass="stat-label"/>
+                <Label fx:id="overdueLoansLabel" text="0" styleClass="stat-value"/>
+            </VBox>
+            
+            <VBox styleClass="stat-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label text="Available Copies" styleClass="stat-label"/>
+                <Label fx:id="availableCopiesLabel" text="0" styleClass="stat-value"/>
+            </VBox>
+            
+            <VBox styleClass="stat-card" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <Label text="Total Loans" styleClass="stat-label"/>
+                <Label fx:id="totalLoansLabel" text="0" styleClass="stat-value"/>
+            </VBox>
+            
+            <VBox styleClass="stat-card" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                <Label text="Return Rate" styleClass="stat-label"/>
+                <Label fx:id="returnRateLabel" text="0%" styleClass="stat-value"/>
+            </VBox>
+        </GridPane>
+    </VBox>
+    
+    <!-- Report Tabs -->
+    <TabPane VBox.vgrow="ALWAYS" styleClass="report-tabs">
+        
+        <!-- Overdue Loans Tab -->
+        <Tab text="Overdue Loans" closable="false">
+            <VBox spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Overdue Loans Report" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Export" onAction="#exportOverdueReport" styleClass="button-secondary"/>
+                </HBox>
+                
+                <TableView fx:id="overdueTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="overdueStudentColumn" text="Student" prefWidth="150"/>
+                        <TableColumn fx:id="overdueBookColumn" text="Book" prefWidth="200"/>
+                        <TableColumn fx:id="overdueCopyColumn" text="Copy ID" prefWidth="80"/>
+                        <TableColumn fx:id="overdueDueDateColumn" text="Due Date" prefWidth="100"/>
+                        <TableColumn fx:id="overdueDaysLateColumn" text="Days Late" prefWidth="100"/>
+                        <TableColumn fx:id="overdueContactColumn" text="Contact" prefWidth="150"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+        
+        <!-- Popular Books Tab -->
+        <Tab text="Popular Books" closable="false">
+            <VBox spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Most Popular Books" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <ComboBox fx:id="popularPeriodFilter" promptText="Time Period" 
+                              prefWidth="150" onAction="#loadPopularBooks"/>
+                    <Button text="Export" onAction="#exportPopularBooksReport" styleClass="button-secondary"/>
+                </HBox>
+                
+                <TableView fx:id="popularBooksTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="popularRankColumn" text="Rank" prefWidth="60"/>
+                        <TableColumn fx:id="popularTitleColumn" text="Title" prefWidth="250"/>
+                        <TableColumn fx:id="popularAuthorColumn" text="Author" prefWidth="150"/>
+                        <TableColumn fx:id="popularSubjectColumn" text="Subject" prefWidth="120"/>
+                        <TableColumn fx:id="popularLoansColumn" text="Total Loans" prefWidth="100"/>
+                        <TableColumn fx:id="popularCopiesColumn" text="Copies" prefWidth="80"/>
+                        <TableColumn fx:id="popularAvailabilityColumn" text="Available" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+        
+        <!-- Student Activity Tab -->
+        <Tab text="Student Activity" closable="false">
+            <VBox spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Student Activity Report" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <ComboBox fx:id="activityPeriodFilter" promptText="Time Period" 
+                              prefWidth="150" onAction="#loadStudentActivity"/>
+                    <Button text="Export" onAction="#exportStudentActivityReport" styleClass="button-secondary"/>
+                </HBox>
+                
+                <TableView fx:id="studentActivityTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="activityStudentColumn" text="Student" prefWidth="150"/>
+                        <TableColumn fx:id="activityBroncoIdColumn" text="Bronco ID" prefWidth="120"/>
+                        <TableColumn fx:id="activityDegreeColumn" text="Degree" prefWidth="120"/>
+                        <TableColumn fx:id="activityTotalLoansColumn" text="Total Loans" prefWidth="100"/>
+                        <TableColumn fx:id="activityActiveLoansColumn" text="Active Loans" prefWidth="100"/>
+                        <TableColumn fx:id="activityOverdueColumn" text="Overdue" prefWidth="80"/>
+                        <TableColumn fx:id="activityLastActivityColumn" text="Last Activity" prefWidth="120"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+        
+        <!-- Subject Analysis Tab -->
+        <Tab text="Subject Analysis" closable="false">
+            <VBox spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Subject Analysis Report" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Export" onAction="#exportSubjectAnalysisReport" styleClass="button-secondary"/>
+                </HBox>
+                
+                <TableView fx:id="subjectAnalysisTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="subjectNameColumn" text="Subject" prefWidth="150"/>
+                        <TableColumn fx:id="subjectBooksColumn" text="Books" prefWidth="80"/>
+                        <TableColumn fx:id="subjectCopiesColumn" text="Copies" prefWidth="80"/>
+                        <TableColumn fx:id="subjectLoansColumn" text="Total Loans" prefWidth="100"/>
+                        <TableColumn fx:id="subjectAvailabilityColumn" text="Available" prefWidth="100"/>
+                        <TableColumn fx:id="subjectPopularityColumn" text="Popularity" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+        
+        <!-- Custom Reports Tab -->
+        <Tab text="Custom Reports" closable="false">
+            <VBox spacing="15">
+                <Label text="Generate Custom Reports" styleClass="section-title"/>
+                
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="100" prefWidth="120"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="200" prefWidth="300"/>
+                    </columnConstraints>
+                    
+                    <Label text="Report Type:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <ComboBox fx:id="customReportType" promptText="Select report type..." 
+                              GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    
+                    <Label text="Date Range:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <DatePicker fx:id="customStartDate" promptText="Start Date"/>
+                        <DatePicker fx:id="customEndDate" promptText="End Date"/>
+                    </HBox>
+                    
+                    <Label text="Filters:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <CheckBox fx:id="customIncludeOverdue" text="Include overdue loans"/>
+                        <CheckBox fx:id="customIncludeReturned" text="Include returned loans"/>
+                        <CheckBox fx:id="customIncludeActive" text="Include active loans"/>
+                    </VBox>
+                </GridPane>
+                
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Button text="Generate Report" onAction="#generateCustomReport" styleClass="button-success"/>
+                    <Button text="Export Report" onAction="#exportCustomReport" styleClass="button-secondary"/>
+                </HBox>
+                
+                <TextArea fx:id="customReportOutput" promptText="Report output will appear here..." 
+                          VBox.vgrow="ALWAYS" editable="false" wrapText="true"/>
+            </VBox>
+        </Tab>
+        
+    </TabPane>
+    
+</VBox> 

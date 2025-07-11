@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.cpp.library.controller.BookManagementController"
+      spacing="20" styleClass="management-screen">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" styleClass="header">
+        <Text text="Book Management" styleClass="title-text"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Refresh" onAction="#refreshBooks" styleClass="button-secondary"/>
+    </HBox>
+    <Text fx:id="copyDialogTitle" visible="false" managed="false"/>
+    <Label fx:id="totalCopiesLabel" visible="false" managed="false"/>
+    <Label fx:id="availableCopiesLabel" visible="false" managed="false"/>
+    <Label fx:id="loanedCopiesLabel" visible="false" managed="false"/>
+    
+    <!-- Search and Filter Section -->
+    <VBox spacing="10" styleClass="search-section">
+        <Text text="Search &amp; Filter" styleClass="section-title"/>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="searchField" promptText="Search by title, author, ISBN, or subject..." 
+                      prefWidth="300" onKeyReleased="#handleSearch"/>
+            <ComboBox fx:id="subjectFilter" promptText="Filter by subject" 
+                      prefWidth="200" onAction="#handleSearch"/>
+            <ComboBox fx:id="availabilityFilter" promptText="Filter by availability" 
+                      prefWidth="150" onAction="#handleSearch"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Clear Filters" onAction="#clearFilters" styleClass="button-secondary"/>
+        </HBox>
+    </VBox>
+    
+    <!-- Hidden dialog ComboBox required by controller -->
+    <HBox spacing="10" alignment="CENTER_LEFT" visible="false" managed="false">
+        <ComboBox fx:id="dialogSubject" />
+    </HBox>
+    
+    <!-- Hidden dialog fields required by controller -->
+    <HBox spacing="10" alignment="CENTER_LEFT" visible="false" managed="false">
+        <TextField fx:id="dialogIsbn"/>
+        <TextField fx:id="dialogTitle"/>
+        <TextField fx:id="dialogAuthor"/>
+        <TextArea fx:id="dialogDescription"/>
+        <Spinner fx:id="dialogCopies"/>
+    </HBox>
+    
+    <!-- Book Table -->
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT">
+            <Text text="Books" styleClass="section-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="bookCountLabel" text="Total: 0" styleClass="count-label"/>
+        </HBox>
+        
+        <TableView fx:id="bookTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="isbnColumn" text="ISBN" prefWidth="120"/>
+                <TableColumn fx:id="titleColumn" text="Title" prefWidth="250"/>
+                <TableColumn fx:id="authorColumn" text="Author" prefWidth="200"/>
+                <TableColumn fx:id="subjectColumn" text="Subject" prefWidth="150"/>
+                <TableColumn fx:id="totalCopiesColumn" text="Total Copies" prefWidth="100"/>
+                <TableColumn fx:id="availableCopiesColumn" text="Available" prefWidth="100"/>
+                <TableColumn fx:id="loanedCopiesColumn" text="Loaned" prefWidth="100"/>
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </VBox>
+    
+    <!-- Hidden BookCopy TableView required by controller -->
+    <VBox spacing="10" visible="false" managed="false">
+        <TableView fx:id="copyTable">
+            <columns>
+                <TableColumn fx:id="copyIdColumn" text="Copy ID"/>
+                <TableColumn fx:id="copyStatusColumn" text="Status"/>
+                <TableColumn fx:id="copyActionsColumn" text="Actions"/>
+            </columns>
+        </TableView>
+    </VBox>
+    
+    <!-- Action Buttons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Add Book" onAction="#showAddBookDialog" styleClass="button-success"/>
+        <Button text="Edit Book" onAction="#showEditBookDialog" styleClass="button"/>
+        <Button text="Delete Book" onAction="#deleteBook" styleClass="button-danger"/>
+        <Button text="Manage Copies" onAction="#manageCopies" styleClass="button-secondary"/>
+        <Button text="View Loans" onAction="#viewBookLoans" styleClass="button-secondary"/>
+    </HBox>
+    
+</VBox> 

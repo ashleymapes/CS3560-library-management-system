@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.cpp.library.controller.StudentManagementController"
+      spacing="20" styleClass="management-screen">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" styleClass="header">
+        <Text text="Student Management" styleClass="title-text"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Refresh" onAction="#refreshStudents" styleClass="button-secondary"/>
+    </HBox>
+
+    <!-- Search and Filter Section -->
+    <VBox spacing="10" styleClass="search-section">
+        <Text text="Search &amp; Filter" styleClass="section-title"/>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="searchField" promptText="Search by name, Bronco ID, or degree..." 
+                      prefWidth="300" onKeyReleased="#handleSearch"/>
+            <ComboBox fx:id="degreeFilter" promptText="Filter by degree" 
+                      prefWidth="200" onAction="#handleSearch"/>
+            <ComboBox fx:id="statusFilter" promptText="Filter by status" 
+                      prefWidth="150" onAction="#handleSearch"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Clear Filters" onAction="#clearFilters" styleClass="button-secondary"/>
+        </HBox>
+    </VBox>
+
+    <!-- Student Table -->
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT">
+            <Text text="Students" styleClass="section-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="studentCountLabel" text="Total: 0" styleClass="count-label"/>
+        </HBox>
+        <TableView fx:id="studentTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="broncoIdColumn" text="Bronco ID" prefWidth="120"/>
+                <TableColumn fx:id="nameColumn" text="Name" prefWidth="200"/>
+                <TableColumn fx:id="addressColumn" text="Address" prefWidth="250"/>
+                <TableColumn fx:id="degreeColumn" text="Degree" prefWidth="150"/>
+                <TableColumn fx:id="activeLoansColumn" text="Active Loans" prefWidth="100"/>
+                <TableColumn fx:id="overdueColumn" text="Overdue" prefWidth="80"/>
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- Action Buttons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Add Student" onAction="#showAddStudentDialog" styleClass="button-success"/>
+        <Button text="Edit Student" onAction="#showEditStudentDialog" styleClass="button"/>
+        <Button text="Delete Student" onAction="#deleteStudent" styleClass="button-danger"/>
+        <Button text="View Loans" onAction="#viewStudentLoans" styleClass="button-secondary"/>
+    </HBox>
+</VBox> 

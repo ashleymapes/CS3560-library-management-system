@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.cpp.library.controller.LoanManagementController"
+      spacing="20" styleClass="management-screen">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" styleClass="header">
+        <Text text="Loan Management" styleClass="title-text"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Refresh" onAction="#refreshLoans" styleClass="button-secondary"/>
+    </HBox>
+    
+    <!-- Search and Filter Section -->
+    <VBox spacing="10" styleClass="search-section">
+        <Text text="Search &amp; Filter" styleClass="section-title"/>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="searchField" promptText="Search by student name, book title, or loan ID..." 
+                      prefWidth="300" onKeyReleased="#handleSearch"/>
+            <ComboBox fx:id="statusFilter" promptText="Filter by status" 
+                      prefWidth="150" onAction="#handleSearch"/>
+            <ComboBox fx:id="overdueFilter" promptText="Filter by overdue" 
+                      prefWidth="150" onAction="#handleSearch"/>
+            <DatePicker fx:id="dateFilter" promptText="Filter by date" 
+                       onAction="#handleSearch"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Clear Filters" onAction="#clearFilters" styleClass="button-secondary"/>
+        </HBox>
+    </VBox>
+    
+    <!-- Hidden dialog ComboBoxes and Labels required by controller -->
+    <HBox spacing="10" alignment="CENTER_LEFT" visible="false" managed="false">
+        <ComboBox fx:id="dialogStudent" />
+        <ComboBox fx:id="dialogBook" />
+        <ComboBox fx:id="dialogCopy" />
+        <DatePicker fx:id="dialogDueDate" />
+        <DatePicker fx:id="returnDatePicker" />
+        <DatePicker fx:id="extendNewDueDate" />
+        <TextArea fx:id="dialogNotes" />
+        <TextArea fx:id="returnNotes" />
+        <TextArea fx:id="extendReason" />
+        <Label fx:id="returnStudentLabel" />
+        <Label fx:id="returnBookLabel" />
+        <Label fx:id="returnCopyLabel" />
+        <Label fx:id="returnDueLabel" />
+        <Label fx:id="extendStudentLabel" />
+        <Label fx:id="extendBookLabel" />
+        <Label fx:id="extendCurrentDueLabel" />
+        <!-- Request dialog fields -->
+        <ComboBox fx:id="requestStudent" />
+        <ComboBox fx:id="requestBook" />
+        <TextArea fx:id="requestNotes" />
+    </HBox>
+    
+    <!-- Loan Table -->
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT">
+            <Text text="Loans" styleClass="section-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="loanCountLabel" text="Total: 0" styleClass="count-label"/>
+        </HBox>
+        
+        <TableView fx:id="loanTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="loanIdColumn" text="Loan ID" prefWidth="80"/>
+                <TableColumn fx:id="studentColumn" text="Student" prefWidth="150"/>
+                <TableColumn fx:id="bookColumn" text="Book" prefWidth="200"/>
+                <TableColumn fx:id="copyIdColumn" text="Copy ID" prefWidth="80"/>
+                <TableColumn fx:id="checkoutDateColumn" text="Checkout Date" prefWidth="120"/>
+                <TableColumn fx:id="dueDateColumn" text="Due Date" prefWidth="120"/>
+                <TableColumn fx:id="returnDateColumn" text="Return Date" prefWidth="120"/>
+                <TableColumn fx:id="statusColumn" text="Status" prefWidth="100"/>
+                <TableColumn fx:id="overdueColumn" text="Overdue" prefWidth="80"/>
+                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </VBox>
+    
+    <!-- Action Buttons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Checkout Book" onAction="#showCheckoutDialog" styleClass="button-success"/>
+        <Button text="Request Book" onAction="#showRequestDialog" styleClass="button-info"/>
+        <Button text="Return Book" onAction="#returnBook" styleClass="button"/>
+        <Button text="Extend Loan" onAction="#extendLoan" styleClass="button-secondary"/>
+        <Button text="View Details" onAction="#viewLoanDetails" styleClass="button-secondary"/>
+        <Button text="View Request Queue" onAction="#showRequestQueueDialog" styleClass="button-secondary"/>
+    </HBox>
+    
+</VBox> 
